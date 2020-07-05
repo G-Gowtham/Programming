@@ -1,0 +1,355 @@
+problem 1:
+
+question:
+
+Sample Input:
+6 2
+1 16 3 11 7 9
+Sample Output:
+3 11 1 16 7 9
+Explanation:
+Given k=2
+N=7
+Then according to k group the elements of array
+116 311 79
+Arrange the above elements in increasing to decreasing
+311 116 79
+The give the elements in array in above order
+3 11 1 16 7 9
+
+code:
+
+n, m = map(int,input().strip().split())
+a = list(map(int,input().strip().split()))
+b = []
+ord_list = []
+c = []
+
+for i in range(0,len(a),m):
+    tmp1 =""
+    tmp2 = ""
+    for j in range(i,i+m):
+        tmp1 += str(a[j])
+        tmp2 += str(10**len(str(a[j])))#+"2"
+    ord_list.append(tmp2)    
+    b.append(int(tmp1))
+
+def bubbleSort(arr,ord_list): 
+    n = len(arr) 
+    for i in range(n): 
+        for j in range(0, n-i-1): 
+            if arr[j] > arr[j+1] : 
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+                ord_list[j], ord_list[j+1] = ord_list[j+1], ord_list[j]
+                
+bubbleSort(b,ord_list)
+
+for i in range(0,len(b)):
+    count = 0
+    for j in range(len(ord_list[i])):
+        if j == 0:
+            continue
+        if ord_list[i][j] == "1":
+            c.append(str(b[i])[:count])
+            b[i] = str(b[i])[count:]
+            count = 0
+        else:
+            count+=1
+        if j == len(ord_list[i])-1:
+            c.append(str(b[i])[:count])
+            b[i] = str(b[i])[count:]
+            
+print(c)
+
+
+=====================================================================================================================	
+problem 2:
+
+question:
+
+sum of the max sub array
+
+
+code:
+
+a = list(map(int,input("Enter the array :").strip().split()))
+pre_sum = a[0]
+check_sum = a[0]
+local_sum = a[0]
+all_neg = 0
+count = 0
+mini = a[0]
+for i in range(0,len(a)):
+    if a[i] < 0:
+        count += 1
+        if mini < a[i]:
+            mini = a[i]
+if count != len(a):
+    for i in range(1,len(a)):
+        local_sum += a[i]
+        if check_sum < local_sum:
+            check_sum = local_sum
+        else:
+            if check_sum > pre_sum:
+                pre_sum = check_sum
+            check_sum = 0
+            local_sum = 0
+else:
+    pre_sum = mini
+
+            
+print(pre_sum)
+
+==================================================================================================================
+problem 3:
+
+question:
+sum of non repeating elements in a array
+
+code:
+
+length = int(input("Length of the array :"))
+a = list(map(int,input("Enter the array :").split()))
+#a = [1,6,3,1,7,9,4,4]
+b = []
+j = 0
+sum = 0
+for i in range(len(a)):
+    if a[i] not in b:
+        b.append(a[i])
+    else:
+        b.remove(a[i])
+for i in b:
+    sum += int(i)
+print(sum)
+
+==================================================================================================================
+problem 4:
+
+question :
+count of all 2 elements and 3 elements combination that is divisible by 3 with out repeation
+
+code:
+
+#a = [4,5,3,1,8]
+a = list(map(int,input("Enter the array :").strip().split())) 
+count = 0
+
+for i in range(0,len(a)-1):
+    for j in range(i+1,len(a)):
+        if (a[i]+a[j])%3 == 0:
+            count += 1
+            
+for i in range(len(a)-2):
+    for j in range(i+1,len(a)-1):
+        for k in range(j+1,len(a)):
+            if (a[i]+a[j]+a[k]) % 3 == 0:
+                count += 1
+                
+print(count)
+
+===============================================================================================================
+problem 5:
+
+
+question:
+
+Rearrange a linked list in to alternate first and last element
+Given a linked list. arrange the linked list in manner of alternate first and last element.
+
+Examples:
+
+Input : 1->2->3->4->5->6->7->8
+Output :1->8->2->7->3->6->4->5
+
+Input :10->11->15->13
+Output :10->13->11->15
+
+code:
+
+class Node:  
+    def __init__(self, data):  
+        self.data = data  
+        self.next = None
+ 
+def arrange( head): 
+    temp = head 
+    d = [] 
+    while (temp != None) : 
+        d.append(temp.data) 
+        temp = temp.next
+    i = 0
+    temp = head 
+    while (len(d) > 0) : 
+        if (i % 2 == 0) : 
+            temp.data = d[0] 
+            d.pop(0) 
+          
+        else : 
+            temp.data = d[-1]  
+            d.pop()  
+          
+        i = i + 1
+        temp = temp.next
+          
+    return head 
+      
+def push( head_ref, new_data): 
+    new_node = Node(0) 
+    new_node.data = new_data 
+    new_node.next = (head_ref) 
+    (head_ref) = new_node 
+    return head_ref 
+ 
+def printList( head): 
+  
+    temp = head 
+    while (temp != None) : 
+        print( temp.data,end=" ") 
+        temp = temp.next
+
+head = None
+head = push(head, 6)
+head = push(head, 5) 
+head = push(head, 4) 
+head = push(head, 3) 
+head = push(head, 2) 
+head = push(head, 1)
+head = push(head, 0)
+
+print("Given linked list\t") 
+printList(head) 
+head = arrange(head) 
+print( "\nAfter rearrangement\t") 
+printList(head) 
+        
+reference : https://www.geeksforgeeks.org/rearrange-linked-list-alternate-first-last-element/
+
+           
+		   
+===============================================================================================================
+
+problem 6:
+
+question:
+
+Pattern matching
+Given two string
+First String consists of *,?and (a-z)
+Second String consists of (a-z)
+*- can be replaced with 0 to any number of characters
+?-can be replaced with only one character
+Sample Input:
+G*d
+Good
+Sample Output:
+Yes
+Hint:(if two string matches print “Yes” otherwise “No”)
+
+code:
+
+s1 = input("Pattern :").strip()
+s2 = input("String :").strip()
+j = 0
+count = 0
+index_txt = -1
+index_pat = -1
+
+for i in range(len(s2)):
+    if j < len(s1) and s2[i] == s1[j]:
+        i += 1
+        j += 1
+    elif j < len(s1) and s1[j] == '?':
+        i+=1
+        j+=1
+    elif j < len(s1) and s1[j] == '*':
+        index_txt = i
+        index_pat = j
+        j+=1
+    elif index_pat == -1:
+        j = index_pat + 1
+        i = index_txt + 1
+        index_txt += 1
+    else:
+        count = 1
+        
+while j < len(s1) and s1[j] == '*':
+    j+=1
+
+if count == 1:
+    print("yes")
+else:
+    if j == len(s1):
+        print("yes")
+    else:
+        print("No")
+    
+=======================================================================================================================
+
+problem 7:
+
+find the number if sub array which produces sum divisible by 11
+
+code:
+
+a = list(map(int,input("Enter the array :").strip().split()))
+#a = [0,2,4,6,18,12]
+lsum = 0
+count = 0
+for i in range(len(a)):
+    for j in range(i,len(a)):
+        lsum += a[j]
+        if lsum % 11 == 0:
+            count += 1
+print(count)
+
+=======================================================================================================================
+
+problem 8:
+
+find the number of sub arrays having sum greater than the  given sum
+
+code:
+
+a = list(map(int,input("Enter the array :").strip().split()))
+s = int(input("sum :"))
+#a = [0,2,4,6,18,12]
+#s = 12
+lsum = 0
+count = 0
+for i in range(len(a)):
+    for j in range(i,len(a)):
+        lsum += a[j]
+        if lsum > s:
+            count += 1
+	lsum = 0
+print(count)
+        
+        
+=======================================================================================================================
+problem 9:
+
+question:
+shortest possible subarray which produces given sum
+
+code:
+
+a = list(map(int,input("Enter the array :").strip().split()))
+s = int(input("sum :").strip())
+#a = [0,2,4,6,18,12]
+#s = 12
+index = 1
+min_size = len(a)+1
+lsum = 0
+for i in range(len(a)):
+    for j in range(i,len(a)):
+        lsum += a[j]
+        if lsum == s:
+            if min_size > index:
+                min_size = index
+        index+=1
+    index = 1
+    lsum = 0
+print(min_size)
+        
+        
