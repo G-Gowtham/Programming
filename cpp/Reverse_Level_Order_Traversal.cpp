@@ -2,147 +2,128 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Tree Node
-struct Node {
+struct Node
+{
     int data;
-    Node *left;
-    Node *right;
-
-    Node(int val) {
-        data = val;
-        left = right = NULL;
-    }
+    struct Node *left;
+    struct Node *right;
 };
-
-vector<int> inOrder(struct Node *root);
-
+// Utility function to create a new Tree Node
+Node* newNode(int val)
+{
+    Node* temp = new Node;
+    temp->data = val;
+    temp->left = NULL;
+    temp->right = NULL;
+    
+    return temp;
+}
 // Function to Build Tree
 Node* buildTree(string str)
-{
+{   
     // Corner Case
     if(str.length() == 0 || str[0] == 'N')
-        return NULL;
-
-    // Creating vector of strings from input
+            return NULL;
+    
+    // Creating vector of strings from input 
     // string after spliting by space
     vector<string> ip;
-
+    
     istringstream iss(str);
     for(string str; iss >> str; )
         ip.push_back(str);
-
+        
     // Create the root of the tree
-    Node* root = new Node(stoi(ip[0]));
-
+    Node* root = newNode(stoi(ip[0]));
+        
     // Push the root to the queue
     queue<Node*> queue;
     queue.push(root);
-
+        
     // Starting from the second element
     int i = 1;
     while(!queue.empty() && i < ip.size()) {
-
+            
         // Get and remove the front of the queue
         Node* currNode = queue.front();
         queue.pop();
-
+            
         // Get the current node's value from the string
         string currVal = ip[i];
-
+            
         // If the left child is not null
         if(currVal != "N") {
-
+                
             // Create the left child for the current node
-            currNode->left = new Node(stoi(currVal));
-
+            currNode->left = newNode(stoi(currVal));
+                
             // Push it to the queue
             queue.push(currNode->left);
         }
-
+            
         // For the right child
         i++;
         if(i >= ip.size())
             break;
         currVal = ip[i];
-
+            
         // If the right child is not null
         if(currVal != "N") {
-
+                
             // Create the right child for the current node
-            currNode->right = new Node(stoi(currVal));
-
+            currNode->right = newNode(stoi(currVal));
+                
             // Push it to the queue
             queue.push(currNode->right);
         }
         i++;
     }
-
+    
     return root;
 }
 
+void reversePrint(Node* root);
 
-int main() {
+int main()
+{
+
     int t;
-    string  tc;
-    getline(cin,tc);
-    t=stoi(tc);
+	scanf("%d ",&t);
     while(t--)
     {
         string s;
-        getline(cin,s);
+		getline(cin,s);
         Node* root = buildTree(s);
-
-        vector <int> res = inOrder(root);
-        for (int i = 0; i < res.size (); i++)
-            cout << res[i] << " ";
-        cout << endl;
+        reversePrint(root);
+        cout<<endl;
     }
-    return 0;
+    return 1;
 }
 
 
-// } Driver Code Ends
-
-
-/* A binary tree node has data, pointer to left child
-   and a pointer to right child  
-struct Node {
-    int data;
-    Node *left;
-    Node *right;
-
-    Node(int val) {
-        data = val;
-        left = right = NULL;
-    }
-}; */
-
-
-vector<int> inOrder(Node* root)
+void reversePrint(Node *root)
 {
-    vector<int> v;
-    stack<pair<Node *,int>> st;
-    st.push({root,0});
+    stack<int> st;
+    queue<Node *> q;
+
+    q.push(root);
+
+    while(!q.empty())
+    {
+        Node *tmp = q.front();
+        q.pop();
+        st.push(tmp->data);
+
+        if(tmp->right != NULL)
+            q.push(tmp->right);
+        if(tmp->left != NULL)
+            q.push(tmp->left);
+        
+    }
 
     while(!st.empty())
     {
-        auto curr = st.top();
+        cout<<st.top()<<" ";
         st.pop();
-
-        if(curr.first == NULL || curr.second == 3)
-            continue;
-        
-        st.push({curr.first,curr.second+1});
-
-        if(curr.second == 0)
-            st.push({curr.first->left,0});
-        else if(curr.second == 1)
-            v.push_back(curr.first->data);
-        else
-            st.push({curr.first->right,0});
-        
-        
     }
-
-    return v;
 }

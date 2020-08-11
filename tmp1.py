@@ -969,3 +969,69 @@ fn()
 #     arr.append(input().strip())
 
 # print(minRot(arr))
+
+class blogs:
+    x = 0
+    def __init__(self,x):
+        self.x = x
+    def out(self):
+        print(self.x)
+
+if __name__ == "__main__":
+    l = [blogs(i) for i in range(1,10)]
+
+    l.sort(key = lambda i : i.x,reverse = True)
+
+    for i in l:
+        i.out()
+
+
+# def convert(num,base):
+#     ans = ""
+
+#     while(num):
+#         ans = str(num%base) + ans
+#         num //= base
+    
+#     return ans
+
+# def fn():
+#     count = 0
+#     base,n = map(int,input().strip().split())
+#     i = base+1
+#     pre_count = 0
+
+#     while pre_count != n:
+#         sumi = 0
+#         x = convert(i,base)
+#         for j in x:
+#             sumi += int(j)
+        
+#         y = convert(sumi,base)
+
+#         if int(x)%int(y) == 0:
+#             count += 1
+#         else:
+#             pre_count = count
+#             count = 0
+#         i += 1
+
+#     print(i-n-1)
+
+#     #print(convert(i-n-1,base))
+
+# fn()
+
+# from decimal import Decimal
+# from decimal import getcontext
+
+# def pi(precision):
+#     getcontext().prec=precision
+#     return sum(1/Decimal(16)**k * 
+#         (Decimal(4)/(8*k+1) - 
+#          Decimal(2)/(8*k+4) - 
+#          Decimal(1)/(8*k+5) -
+#          Decimal(1)/(8*k+6)) for k in range (precision))
+
+# print(pi(10))
+

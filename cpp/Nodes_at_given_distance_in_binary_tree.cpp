@@ -123,6 +123,7 @@ struct Node
 
 /* Recursive function to print all the nodes at distance k in the
    tree (or subtree) rooted with given root. See  */
+
 unordered_map<Node*,Node*> umap;
 Node *t=NULL;
 void traverse(Node *root,int target,Node* pre)
@@ -133,9 +134,7 @@ void traverse(Node *root,int target,Node* pre)
     umap[root] = pre;
 
     if(root->data == target)
-    {
         t = root;
-    }
 
     traverse(root->left,target,root);
     traverse(root->right,target,root);
