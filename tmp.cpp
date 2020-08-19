@@ -1,148 +1,43 @@
-// { Driver Code Starts
-#include <bits/stdc++.h>
-using namespace std;
-
-// Tree Node
-struct Node {
-    int data;
-    Node *left;
-    Node *right;
-
-    Node(int val) {
-        data = val;
-        left = right = NULL;
-    }
-};
-
-vector<int> inOrder(struct Node *root);
-
-// Function to Build Tree
-Node* buildTree(string str)
-{
-    // Corner Case
-    if(str.length() == 0 || str[0] == 'N')
-        return NULL;
-
-    // Creating vector of strings from input
-    // string after spliting by space
-    vector<string> ip;
-
-    istringstream iss(str);
-    for(string str; iss >> str; )
-        ip.push_back(str);
-
-    // Create the root of the tree
-    Node* root = new Node(stoi(ip[0]));
-
-    // Push the root to the queue
-    queue<Node*> queue;
-    queue.push(root);
-
-    // Starting from the second element
-    int i = 1;
-    while(!queue.empty() && i < ip.size()) {
-
-        // Get and remove the front of the queue
-        Node* currNode = queue.front();
-        queue.pop();
-
-        // Get the current node's value from the string
-        string currVal = ip[i];
-
-        // If the left child is not null
-        if(currVal != "N") {
-
-            // Create the left child for the current node
-            currNode->left = new Node(stoi(currVal));
-
-            // Push it to the queue
-            queue.push(currNode->left);
-        }
-
-        // For the right child
-        i++;
-        if(i >= ip.size())
-            break;
-        currVal = ip[i];
-
-        // If the right child is not null
-        if(currVal != "N") {
-
-            // Create the right child for the current node
-            currNode->right = new Node(stoi(currVal));
-
-            // Push it to the queue
-            queue.push(currNode->right);
-        }
-        i++;
-    }
-
-    return root;
+#include<stdio.h>
+#include<stdlib.h>
+typedef unsigned long long ulong;
+ulong gcd(int a,int b){
+    if(a%b==0)
+        return b;
+    else
+        return gcd(b,a%b);
 }
-
-
-int main() {
-    int t;
-    string  tc;
-    getline(cin,tc);
-    t=stoi(tc);
-    while(t--)
-    {
-        string s;
-        getline(cin,s);
-        Node* root = buildTree(s);
-
-        vector <int> res = inOrder(root);
-        for (int i = 0; i < res.size (); i++)
-            cout << res[i] << " ";
-        cout << endl;
+ulong lcm(ulong a,ulong b){
+    return (a*b)/gcd(a,b);
+}
+ulong monkeys(ulong n){
+    int i;
+    ulong* ar = (ulong*)malloc((n+1)*sizeof(ulong));
+    for(i=1;i<=n;i++)
+        scanf("%llu",&ar[i]);
+    int res=1,loop_length,tid;
+    for(i=1;i<=n;i++){
+        loop_length=0;
+        while(ar[i]!=0){
+            loop_length++;
+            tid = ar[i];       // tid = i
+            ar[i]=0;           //i = ar[i]
+            i =tid;            //ar[tid]=0
+        }
+        if(loop_length!=0){
+            res = lcm(res,loop_length);
+        }
+    }
+    free(ar);
+    return res;
+}
+int main(){
+    ulong t,n,res;
+    scanf("%llu",&t);
+    while(t--){
+        scanf("%llu",&n);
+        res = monkeys(n);
+        printf("%llu\n",res);
     }
     return 0;
-}
-
-
-// } Driver Code Ends
-
-
-/* A binary tree node has data, pointer to left child
-   and a pointer to right child  
-struct Node {
-    int data;
-    Node *left;
-    Node *right;
-
-    Node(int val) {
-        data = val;
-        left = right = NULL;
-    }
-}; */
-
-
-vector<int> inOrder(Node* root)
-{
-    vector<int> v;
-    stack<pair<Node *,int>> st;
-    st.push({root,0});
-
-    while(!st.empty())
-    {
-        auto curr = st.top();
-        st.pop();
-
-        if(curr.first == NULL || curr.second == 3)
-            continue;
-        
-        st.push({curr.first,curr.second+1});
-
-        if(curr.second == 0)
-            st.push({curr.first->left,0});
-        else if(curr.second == 1)
-            v.push_back(curr.first->data);
-        else
-            st.push({curr.first->right,0});
-        
-        
-    }
-
-    return v;
 }
