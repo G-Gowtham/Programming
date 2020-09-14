@@ -1,7 +1,0 @@
-<html>
- <head>
- </head>
- <body>
-  Moved Permanently. Redirecting to /
- </body>
-</html>
