@@ -1,0 +1,55 @@
+#User function Template for python3
+
+from collections import defaultdict 
+
+def relativeSort (A1, N, A2, M):
+    d = defaultdict(lambda:0)
+    
+    for i in A1:
+        d[i]+=1
+    
+    pos = 0
+    
+    for i in A2:
+        while d[i]>0:
+            A1[pos] = i
+            d[i]-=1
+            pos+=1
+            
+    tmp = []
+    for i in d:
+        while d[i]>0:
+            tmp.append(i)
+            d[i]-=1
+            
+    tmp.sort()
+    
+    for i in tmp:
+        A1[pos] = i
+        pos += 1
+    
+    return A1
+
+
+
+#{ 
+#  Driver Code Starts
+#Initial Template for Python 3
+
+t = int (input ())
+while t > 0:
+    n, m = list
+    (map(int, input().split()))
+    a1 = list(map(int, input().split()))
+    a2 = list(map(int, input().split()))
+    
+    a1 = relativeSort (a1, n, a2, m)
+    for i in a1:
+        print (i, end = " ")
+    
+    print ()
+    
+    t -= 1
+    
+# Contributed By : Pranay Bansal
+# } Driver Code Ends
